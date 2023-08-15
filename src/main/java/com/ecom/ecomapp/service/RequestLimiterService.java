@@ -17,7 +17,7 @@ public class RequestLimiterService {
     /**
      * Empty response.
      */
-    private final String EMPTY_RESPONSE = "_";
+    public final static String EMPTY_RESPONSE = "_";
 
     private final RequestLimiterRepository requestLimiterRepository;
 

@@ -2,6 +2,7 @@ package com.ecom.ecomapp.controllers;
 
 import com.ecom.ecomapp.service.RequestLimiterService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class RequestLimiterController {
         this.LOGGER.info("Request limiter endpoint");
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
         this.requestLimiterService.trackRequest(request, completableFuture);
-        return ResponseEntity.ok(completableFuture.get());
+        return completableFuture.get().equalsIgnoreCase(RequestLimiterService.EMPTY_RESPONSE) ? ResponseEntity.ok(RequestLimiterService.EMPTY_RESPONSE) : ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
     }
 
 }
